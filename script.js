@@ -21,6 +21,11 @@ function printBoard() {
     })
 }
 
+// Function to generate a random tile on our board
+function generateRandomTile() {
+    
+}
+
 function main(){
     initializeBoard();
     printBoard();
