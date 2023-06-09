@@ -23,14 +23,6 @@ function printBoard() {
 
 // Function to generate a random tile on our board
 function generateRandomTile() {
-    // Create empty array 'emptyCells'
-    // Iterate through the board 
-        // If board at the cell is 0
-            // Add cell coodrdinates to emptyCells
-    // We use Math.random() to choose a random index in the emptyCells array
-    // Using the random index, choose a random cell coordiante
-    // Using the random cell coordinate, insert new tile into our game board
-
     // Finding all of the empty cells in the board
     let emptyCells = [];
     for(let y = 0; y < BOARD_SIZE; y++){
@@ -56,6 +48,7 @@ function generateRandomTile() {
 
 function main(){
     initializeBoard();
+    generateRandomTile();
     generateRandomTile();
     printBoard();
 }
