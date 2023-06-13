@@ -58,6 +58,7 @@ function getMove(){
         switch(answer){
             case 'left':
                 console.log("moving left");
+                moveLeft();
                 break;
             case 'right':
                 console.log("moving right");
@@ -73,6 +74,53 @@ function getMove(){
         printBoard();
         getMove();
     })
+}
+
+// Function to move all the tiles to the left
+function moveLeft(){
+    // For each row
+        // For each cell after index 0
+            // If the cell is equal to 0
+                // skip cell
+            // set moveToIndex = null
+            // For each cell to the left of the current cell
+                // If the cell is empty OR if the cell has a tile of equal value to the current tile
+                    // moveToIndex = cell index
+                // Otherwise
+                    // stop the loop
+            // If moveToIndex is not null
+                // If row at moveToIndex is empty
+                    // row at moveToIndex = tile value
+                    // cell with the tile = 0
+                // Otherwise
+                    // row at moveToIndex = double tile value
+                    // cell with tile = 0;
+    for(let rowIndex = 0; rowIndex < BOARD_SIZE; rowIndex++){
+        let row = board[rowIndex];
+        for(let i = 1; i < row.length; i++){
+            if(row[i] === 0){
+                continue;
+            }
+            let moveToIndex = null;
+            for(let j = i - 1; j >= 0; j--){
+                if(row[j] === 0 || row[j] === row[i]){
+                    moveToIndex = j;
+                } else {
+                    break;
+                }
+            }
+            if(moveToIndex !== null){
+                if(row[moveToIndex] === 0){
+                    row[moveToIndex] = row[i];
+                    row[i] = 0;
+                } else {
+                    row[moveToIndex] = row[i] * 2;
+                    row[i] = 0;
+                }
+                
+            }
+        }
+    }
 }
 
 function main(){
