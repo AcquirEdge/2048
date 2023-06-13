@@ -52,13 +52,35 @@ function generateRandomTile() {
     
 }
 
-
+// Function to get the user's next move, and execute it
+function getMove(){
+    rl.question("Enter your next move(up, down, left, right): ", (answer) => {
+        switch(answer){
+            case 'left':
+                console.log("moving left");
+                break;
+            case 'right':
+                console.log("moving right");
+                break;
+            case 'up':
+                console.log("moving up");
+                break;
+            case 'down':
+                console.log("moving down");
+                break;
+        }
+        generateRandomTile();
+        printBoard();
+        getMove();
+    })
+}
 
 function main(){
     initializeBoard();
     generateRandomTile();
     generateRandomTile();
     printBoard();
+    getMove();
 }
 
 main();
