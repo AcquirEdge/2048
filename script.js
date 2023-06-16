@@ -79,12 +79,13 @@ function getMove(){
 // Function to move all the tiles to the left
 function moveLeft(){
     // For each row
+        // Create temporary array mergeList
         // For each cell after index 0
             // If the cell is equal to 0
                 // skip cell
             // set moveToIndex = null
             // For each cell to the left of the current cell
-                // If the cell is empty OR if the cell has a tile of equal value to the current tile
+                // If the cell is empty OR (if the cell has a tile of equal value to the current tile AND new cell index can not be in mergeList)
                     // moveToIndex = cell index
                 // Otherwise
                     // stop the loop
@@ -95,15 +96,17 @@ function moveLeft(){
                 // Otherwise
                     // row at moveToIndex = double tile value
                     // cell with tile = 0;
+                    // add moveToIndex to mergeList
     for(let rowIndex = 0; rowIndex < BOARD_SIZE; rowIndex++){
         let row = board[rowIndex];
+        let mergeList = [];
         for(let i = 1; i < row.length; i++){
             if(row[i] === 0){
                 continue;
             }
             let moveToIndex = null;
             for(let j = i - 1; j >= 0; j--){
-                if(row[j] === 0 || row[j] === row[i]){
+                if(row[j] === 0 || (row[j] === row[i] && !mergeList.includes(j))){
                     moveToIndex = j;
                 } else {
                     break;
@@ -116,6 +119,7 @@ function moveLeft(){
                 } else {
                     row[moveToIndex] = row[i] * 2;
                     row[i] = 0;
+                    mergeList.push(moveToIndex);
                 }
                 
             }
@@ -127,6 +131,7 @@ function main(){
     initializeBoard();
     generateRandomTile();
     generateRandomTile();
+    board[0] = [0, 2, 2, 4];
     printBoard();
     getMove();
 }
