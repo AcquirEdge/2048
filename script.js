@@ -78,34 +78,19 @@ function getMove(){
 
 // Function to move all the tiles to the left
 function moveLeft(){
-    // For each row
-        // Create temporary array mergeList
-        // For each cell after index 0
-            // If the cell is equal to 0
-                // skip cell
-            // set moveToIndex = null
-            // For each cell to the left of the current cell
-                // If the cell is empty OR (if the cell has a tile of equal value to the current tile AND new cell index can not be in mergeList)
-                    // moveToIndex = cell index
-                // Otherwise
-                    // stop the loop
-            // If moveToIndex is not null
-                // If row at moveToIndex is empty
-                    // row at moveToIndex = tile value
-                    // cell with the tile = 0
-                // Otherwise
-                    // row at moveToIndex = double tile value
-                    // cell with tile = 0;
-                    // add moveToIndex to mergeList
     for(let rowIndex = 0; rowIndex < BOARD_SIZE; rowIndex++){
         let row = board[rowIndex];
+        // Temporary array to store merged indexes on each row
         let mergeList = [];
         for(let i = 1; i < row.length; i++){
+            // Skip empty cells, no tiles to move
             if(row[i] === 0){
                 continue;
             }
+            // Temporary variable to store the index the tile will move to
             let moveToIndex = null;
             for(let j = i - 1; j >= 0; j--){
+                // Current tile can move when the cell is empty, or if an unmerged tile has equal value to the current tile
                 if(row[j] === 0 || (row[j] === row[i] && !mergeList.includes(j))){
                     moveToIndex = j;
                 } else {
@@ -114,9 +99,11 @@ function moveLeft(){
             }
             if(moveToIndex !== null){
                 if(row[moveToIndex] === 0){
+                    // Moving tile to empty cell
                     row[moveToIndex] = row[i];
                     row[i] = 0;
                 } else {
+                    // Merging the tiles
                     row[moveToIndex] = row[i] * 2;
                     row[i] = 0;
                     mergeList.push(moveToIndex);
