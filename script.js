@@ -63,10 +63,10 @@ function getMove(){
                 moveRight();
                 break;
             case 'up':
-                console.log("moving up");
+                moveUp();
                 break;
             case 'down':
-                console.log("moving down");
+                moveDown();
                 break;
         }
         generateRandomTile();
@@ -119,6 +119,20 @@ function moveRight(){
     reverseBoard();
     moveLeft();
     reverseBoard();
+}
+
+// Function to move all the tiles up
+function moveUp(){
+    transposeBoard();
+    moveLeft();
+    transposeBoard();
+}
+
+// Function to move all the tiles down
+function moveDown(){
+    transposeBoard();
+    moveRight();
+    transposeBoard();
 }
 
 // Helper function to reverse our board
