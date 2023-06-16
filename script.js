@@ -115,6 +115,7 @@ function moveLeft(){
 
 // Function to move all the tiles to the right
 function moveRight(){
+    // Moving right is equivalent to reversing the board, and moving left
     reverseBoard();
     moveLeft();
     reverseBoard();
@@ -125,6 +126,18 @@ function reverseBoard(){
     board.forEach((row) => {
         row.reverse();
     })
+}
+
+// Helper function to transpose our board
+function transposeBoard(){
+    for(let i = 0; i < BOARD_SIZE; i++){
+        for(let j = 0; j < i; j++){
+            // swap corresponding values
+            let temp = board[i][j];
+            board[i][j] = board[j][i];
+            board[j][i] = temp;
+        }
+    }
 }
 
 function main(){
