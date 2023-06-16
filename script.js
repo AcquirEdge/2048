@@ -57,11 +57,10 @@ function getMove(){
     rl.question("Enter your next move(up, down, left, right): ", (answer) => {
         switch(answer){
             case 'left':
-                console.log("moving left");
                 moveLeft();
                 break;
             case 'right':
-                console.log("moving right");
+                moveRight();
                 break;
             case 'up':
                 console.log("moving up");
@@ -112,6 +111,20 @@ function moveLeft(){
             }
         }
     }
+}
+
+// Function to move all the tiles to the right
+function moveRight(){
+    reverseBoard();
+    moveLeft();
+    reverseBoard();
+}
+
+// Helper function to reverse our board
+function reverseBoard(){
+    board.forEach((row) => {
+        row.reverse();
+    })
 }
 
 function main(){
