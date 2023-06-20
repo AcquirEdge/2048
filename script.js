@@ -57,7 +57,10 @@ function getMove(){
     rl.question("Enter your next move(up, down, left, right): ", (answer) => {
         switch(answer){
             case 'left':
-                moveLeft();
+                if(canMoveLeft()){
+                    moveLeft();
+                    generateRandomTile();
+                }
                 break;
             case 'right':
                 moveRight();
@@ -69,7 +72,6 @@ function getMove(){
                 moveDown();
                 break;
         }
-        generateRandomTile();
         printBoard();
         getMove();
     })
@@ -152,6 +154,23 @@ function transposeBoard(){
             board[j][i] = temp;
         }
     }
+}
+
+// Function to check if any tiles can move left
+function canMoveLeft(){
+    for(let rowIndex = 0; rowIndex < BOARD_SIZE; rowIndex++){
+        let row = board[rowIndex];
+        // For each tile in the row, check if it can move one tile to the left
+        for(let i = 1; i < row.length; i++){
+            if(row[i] === 0){
+                continue;
+            }
+            if(row[i - 1] === 0 || row[i - 1] === row[i]){
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 function main(){
