@@ -215,6 +215,15 @@ function hasWon(){
             }
         }
     }
+    return false;
+}
+
+// Function to check if we lost the game
+function hasLost(){
+    if(!canMoveLeft() && !canMoveRight() && !canMoveUp() && !canMoveDown()){
+        return true;
+    }
+    return false;
 }
 
 function main(){
