@@ -81,6 +81,17 @@ function getMove(){
                 }
                 break;
         }
+        if(hasWon()){
+            printBoard();
+            console.log("You Won!");
+            rl.close();
+            return;
+        } else if(hasLost()){
+            printBoard();
+            console.log("You Lost!");
+            rl.close();
+            return;
+        }
         printBoard();
         getMove();
     })
