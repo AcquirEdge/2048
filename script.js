@@ -206,6 +206,17 @@ function canMoveDown(){
     return canMove;
 }
 
+// Function to check if we won the game
+function hasWon(){
+    for(let i = 0; i < BOARD_SIZE; i++){
+        for(let j = 0; j < BOARD_SIZE; j++){
+            if(board[i][j] === 2048){
+                return true;
+            }
+        }
+    }
+}
+
 function main(){
     initializeBoard();
     generateRandomTile();
