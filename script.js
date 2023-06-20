@@ -63,13 +63,22 @@ function getMove(){
                 }
                 break;
             case 'right':
-                moveRight();
+                if(canMoveRight()){
+                    moveRight();
+                    generateRandomTile();
+                }
                 break;
             case 'up':
-                moveUp();
+                if(canMoveUp()){
+                    moveUp();
+                    generateRandomTile();
+                }
                 break;
             case 'down':
-                moveDown();
+                if(canMoveDown()){
+                    moveDown();
+                    generateRandomTile();
+                }
                 break;
         }
         printBoard();
@@ -171,6 +180,30 @@ function canMoveLeft(){
         }
     }
     return false;
+}
+
+// Function to check if any tiles can move right
+function canMoveRight(){
+    reverseBoard();
+    let canMove = canMoveLeft();
+    reverseBoard();
+    return canMove;
+}
+
+// Function to check if any tiles can move up
+function canMoveUp(){
+    transposeBoard();
+    let canMove = canMoveLeft();
+    transposeBoard();
+    return canMove;
+}
+
+// Function to check if any tiles can move down
+function canMoveDown(){
+    transposeBoard();
+    let canMove = canMoveRight();
+    transposeBoard();
+    return canMove;
 }
 
 function main(){
