@@ -1,4 +1,5 @@
 import Board from "./Board.mjs";
+import Tile from "./Tile.mjs";
 
 import readline from "readline";
 let rl = readline.createInterface({
@@ -17,7 +18,7 @@ function generateRandomTile() {
     let emptyCells = [];
     for(let y = 0; y < BOARD_SIZE; y++){
         for(let x = 0; x < BOARD_SIZE; x++){
-            if(board.grid[y][x] === 0){
+            if(board.grid[y][x].tile === null){
                 let coordinate = {
                     x: x,
                     y: y
@@ -30,8 +31,10 @@ function generateRandomTile() {
     if(emptyCells.length > 0){
         let randomCellIndex = Math.floor(Math.random() * emptyCells.length)
         let randomCellCoordinate = emptyCells[randomCellIndex];
+        let randomX = randomCellCoordinate.x;
+        let randomY = randomCellCoordinate.y;
         // 90% chance for a 2, and 10% chance for a 4 for our new random tile
-        board.grid[randomCellCoordinate.y][randomCellCoordinate.x] = Math.random() < 0.9 ? 2 : 4;
+        board.grid[randomCellCoordinate.y][randomCellCoordinate.x].tile = new Tile(randomX, randomY, Math.random() < 0.9 ? 2 : 4);
     }
     
 }
@@ -89,28 +92,28 @@ function moveLeft(){
         let mergeList = [];
         for(let i = 1; i < row.length; i++){
             // Skip empty cells, no tiles to move
-            if(row[i] === 0){
+            if(row[i].tile === null){
                 continue;
             }
             // Temporary variable to store the index the tile will move to
             let moveToIndex = null;
             for(let j = i - 1; j >= 0; j--){
                 // Current tile can move when the cell is empty, or if an unmerged tile has equal value to the current tile
-                if(row[j] === 0 || (row[j] === row[i] && !mergeList.includes(j))){
+                if(row[j].tile === null || (row[j].tile.value === row[i].tile.value && !mergeList.includes(j))){
                     moveToIndex = j;
                 } else {
                     break;
                 }
             }
             if(moveToIndex !== null){
-                if(row[moveToIndex] === 0){
+                if(row[moveToIndex].tile === null){
                     // Moving tile to empty cell
-                    row[moveToIndex] = row[i];
-                    row[i] = 0;
+                    row[moveToIndex].tile = row[i].tile;
+                    row[i].tile = null;
                 } else {
                     // Merging the tiles
-                    row[moveToIndex] = row[i] * 2;
-                    row[i] = 0;
+                    row[moveToIndex].tile.value = row[i].tile.value * 2;
+                    row[i].tile = null;
                     mergeList.push(moveToIndex);
                 }
                 
@@ -147,10 +150,10 @@ function canMoveLeft(){
         let row = board.grid[rowIndex];
         // For each tile in the row, check if it can move one tile to the left
         for(let i = 1; i < row.length; i++){
-            if(row[i] === 0){
+            if(row[i].tile === null){
                 continue;
             }
-            if(row[i - 1] === 0 || row[i - 1] === row[i]){
+            if(row[i - 1].tile === null || row[i - 1].tile.value === row[i].tile.value){
                 return true;
             }
         }
@@ -186,7 +189,7 @@ function canMoveDown(){
 function hasWon(){
     for(let i = 0; i < BOARD_SIZE; i++){
         for(let j = 0; j < BOARD_SIZE; j++){
-            if(board.grid[i][j] === 2048){
+            if(board.grid[i][j].tile !== null && board.grid[i][j].tile.value === 2048){
                 return true;
             }
         }

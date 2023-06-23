@@ -1,3 +1,5 @@
+import Cell from "./Cell.mjs"
+
 export default class Board {
     // Define the game board as an empty array
     #grid = [];
@@ -9,7 +11,7 @@ export default class Board {
         for(let i = 0; i < this.#boardSize; i++){
             let row = [];
             for(let j = 0; j < this.#boardSize; j++){
-                row.push(0);
+                row.push(new Cell(j, i));
             }
             this.#grid.push(row);
         }
@@ -22,7 +24,10 @@ export default class Board {
     // Print out the board
     printBoard(){
         this.#grid.forEach((row) => {
-            console.log(row.join(" "));
+            let values = row.map((cell) => {
+                return cell.tile === null ? 0 : cell.tile.value;
+            });
+            console.log(values.join(" "));
         })
     }
 
