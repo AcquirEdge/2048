@@ -1,3 +1,5 @@
+import Board from "./Board.mjs";
+
 import readline from "readline";
 let rl = readline.createInterface({
     input: process.stdin,
@@ -7,25 +9,7 @@ let rl = readline.createInterface({
 // use constant because board size does not change during our program
 const BOARD_SIZE = 4;
 
-let board = [];
-
-// Initialize board to a multidimenional array with nested arrays representing rows
-function initializeBoard(){
-    for(let i = 0; i < BOARD_SIZE; i++){
-        let row = [];
-        for(let j = 0; j < BOARD_SIZE; j++){
-            row.push(0);
-        }
-        board.push(row)
-    }
-}
-
-// Custom printBoard function to increase readability of our board
-function printBoard() {
-    board.forEach((row) => {
-        console.log(row.join(" "))
-    })
-}
+let board = new Board(BOARD_SIZE);
 
 // Function to generate a random tile on our board
 function generateRandomTile() {
@@ -33,7 +17,7 @@ function generateRandomTile() {
     let emptyCells = [];
     for(let y = 0; y < BOARD_SIZE; y++){
         for(let x = 0; x < BOARD_SIZE; x++){
-            if(board[y][x] === 0){
+            if(board.grid[y][x] === 0){
                 let coordinate = {
                     x: x,
                     y: y
@@ -47,7 +31,7 @@ function generateRandomTile() {
         let randomCellIndex = Math.floor(Math.random() * emptyCells.length)
         let randomCellCoordinate = emptyCells[randomCellIndex];
         // 90% chance for a 2, and 10% chance for a 4 for our new random tile
-        board[randomCellCoordinate.y][randomCellCoordinate.x] = Math.random() < 0.9 ? 2 : 4;
+        board.grid[randomCellCoordinate.y][randomCellCoordinate.x] = Math.random() < 0.9 ? 2 : 4;
     }
     
 }
@@ -82,17 +66,17 @@ function getMove(){
                 break;
         }
         if(hasWon()){
-            printBoard();
+            board.printBoard();
             console.log("You Won!");
             rl.close();
             return;
         } else if(hasLost()){
-            printBoard();
+            board.printBoard();
             console.log("You Lost!");
             rl.close();
             return;
         }
-        printBoard();
+        board.printBoard();
         getMove();
     })
 }
@@ -100,7 +84,7 @@ function getMove(){
 // Function to move all the tiles to the left
 function moveLeft(){
     for(let rowIndex = 0; rowIndex < BOARD_SIZE; rowIndex++){
-        let row = board[rowIndex];
+        let row = board.grid[rowIndex];
         // Temporary array to store merged indexes on each row
         let mergeList = [];
         for(let i = 1; i < row.length; i++){
@@ -138,48 +122,29 @@ function moveLeft(){
 // Function to move all the tiles to the right
 function moveRight(){
     // Moving right is equivalent to reversing the board, and moving left
-    reverseBoard();
+    board.reverse();
     moveLeft();
-    reverseBoard();
+    board.reverse();
 }
 
 // Function to move all the tiles up
 function moveUp(){
-    transposeBoard();
+    board.transpose();
     moveLeft();
-    transposeBoard();
+    board.transpose();
 }
 
 // Function to move all the tiles down
 function moveDown(){
-    transposeBoard();
+    board.transpose();
     moveRight();
-    transposeBoard();
-}
-
-// Helper function to reverse our board
-function reverseBoard(){
-    board.forEach((row) => {
-        row.reverse();
-    })
-}
-
-// Helper function to transpose our board
-function transposeBoard(){
-    for(let i = 0; i < BOARD_SIZE; i++){
-        for(let j = 0; j < i; j++){
-            // swap corresponding values
-            let temp = board[i][j];
-            board[i][j] = board[j][i];
-            board[j][i] = temp;
-        }
-    }
+    board.transpose();
 }
 
 // Function to check if any tiles can move left
 function canMoveLeft(){
     for(let rowIndex = 0; rowIndex < BOARD_SIZE; rowIndex++){
-        let row = board[rowIndex];
+        let row = board.grid[rowIndex];
         // For each tile in the row, check if it can move one tile to the left
         for(let i = 1; i < row.length; i++){
             if(row[i] === 0){
@@ -195,25 +160,25 @@ function canMoveLeft(){
 
 // Function to check if any tiles can move right
 function canMoveRight(){
-    reverseBoard();
+    board.reverse();
     let canMove = canMoveLeft();
-    reverseBoard();
+    board.reverse();
     return canMove;
 }
 
 // Function to check if any tiles can move up
 function canMoveUp(){
-    transposeBoard();
+    board.transpose();
     let canMove = canMoveLeft();
-    transposeBoard();
+    board.transpose();
     return canMove;
 }
 
 // Function to check if any tiles can move down
 function canMoveDown(){
-    transposeBoard();
+    board.transpose();
     let canMove = canMoveRight();
-    transposeBoard();
+    board.transpose();
     return canMove;
 }
 
@@ -221,7 +186,7 @@ function canMoveDown(){
 function hasWon(){
     for(let i = 0; i < BOARD_SIZE; i++){
         for(let j = 0; j < BOARD_SIZE; j++){
-            if(board[i][j] === 2048){
+            if(board.grid[i][j] === 2048){
                 return true;
             }
         }
@@ -238,10 +203,9 @@ function hasLost(){
 }
 
 function main(){
-    initializeBoard();
     generateRandomTile();
     generateRandomTile();
-    printBoard();
+    board.printBoard();
     getMove();
 }
 

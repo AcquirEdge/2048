@@ -37,9 +37,9 @@ export default class Board {
     transpose(){
         for(let i = 0; i < this.#boardSize; i++){
             for(let j = 0; j < i; j++){
-                let temp = board[i][j];
-                board[i][j] = board[j][i];
-                board[j][i] = temp;
+                let temp = this.#grid[i][j];
+                this.#grid[i][j] = this.#grid[j][i];
+                this.#grid[j][i] = temp;
             }
         }
     }
