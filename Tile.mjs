@@ -22,6 +22,7 @@ export default class Tile {
 
     set x(newX){
         this.#x = newX;
+        this.#tileElement.style.setProperty("--x", newX);
     }
 
     get y(){
@@ -30,6 +31,7 @@ export default class Tile {
 
     set y(newY){
         this.#y = newY;
+        this.#tileElement.style.setProperty("--y", newY);
     }
 
     get value(){
