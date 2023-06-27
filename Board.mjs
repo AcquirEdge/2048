@@ -31,15 +31,15 @@ export default class Board {
         return this.#boardElement;
     }
 
-    // Print out the board
-    printBoard(){
-        this.#grid.forEach((row) => {
-            let values = row.map((cell) => {
-                return cell.tile === null ? 0 : cell.tile.value;
-            });
-            console.log(values.join(" "));
-        })
-    }
+    // // Print out the board
+    // printBoard(){
+    //     this.#grid.forEach((row) => {
+    //         let values = row.map((cell) => {
+    //             return cell.tile === null ? 0 : cell.tile.value;
+    //         });
+    //         console.log(values.join(" "));
+    //     })
+    // }
 
     // Helper function to reverse the board's rows
     reverse(){

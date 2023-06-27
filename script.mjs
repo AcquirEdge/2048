@@ -67,15 +67,12 @@ function handleInput(e){
             break;
     }
     if(hasWon()){
-        board.printBoard();
         console.log("You Won!");
         return;
     } else if(hasLost()){
-        board.printBoard();
         console.log("You Lost!");
         return;
     }
-    board.printBoard();
     setupInput();
 }
 
@@ -204,7 +201,6 @@ function hasLost(){
 function main(){
     generateRandomTile();
     generateRandomTile();
-    board.printBoard();
     setupInput();
 }
 
