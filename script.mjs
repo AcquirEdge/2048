@@ -108,6 +108,7 @@ function moveLeft(){
                 } else {
                     // Merging the tiles
                     row[moveToIndex].tile.value = row[i].tile.value * 2;
+                    row[i].tile.remove();
                     row[i].tile = null;
                     mergeList.push(moveToIndex);
                 }

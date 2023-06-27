@@ -40,5 +40,10 @@ export default class Tile {
 
     set value(newValue){
         this.#value = newValue;
+        this.#tileElement.innerText = newValue;
+    }
+
+    remove(){
+        this.#tileElement.remove();
     }
 }
