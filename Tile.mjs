@@ -2,11 +2,18 @@ export default class Tile {
     #x;
     #y;
     #value;
+    #tileElement;
 
-    constructor(x, y, value){
+    constructor(boardElement, x, y, value){
         this.#x = x;
         this.#y = y;
         this.#value = value;
+        this.#tileElement = document.createElement("div");
+        this.#tileElement.classList.add("tile");
+        this.#tileElement.innerText = value;
+        this.#tileElement.style.setProperty("--y", y);
+        this.#tileElement.style.setProperty("--x", x);
+        boardElement.append(this.#tileElement);
     }
 
     get x(){

@@ -27,3 +27,19 @@ h1 {
     background-color: #bbada0;
     border-radius: 1vmin;
 }
+
+.tile {
+    display: inherit;
+    position: absolute;
+    width: 12vmin;
+    height: 12vmin;
+    border-radius: 1vmin;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    font-size: 5vmin;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    top: calc(1vmin + var(--y) * (12vmin + 1vmin));
+    left: calc(1vmin + var(--x) * (12vmin + 1vmin));
+}

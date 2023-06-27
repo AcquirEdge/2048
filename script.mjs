@@ -28,7 +28,7 @@ function generateRandomTile() {
         let randomX = randomCellCoordinate.x;
         let randomY = randomCellCoordinate.y;
         // 90% chance for a 2, and 10% chance for a 4 for our new random tile
-        board.grid[randomCellCoordinate.y][randomCellCoordinate.x].tile = new Tile(randomX, randomY, Math.random() < 0.9 ? 2 : 4);
+        board.grid[randomCellCoordinate.y][randomCellCoordinate.x].tile = new Tile(board.boardElement, randomX, randomY, Math.random() < 0.9 ? 2 : 4);
     }
     
 }

@@ -27,6 +27,10 @@ export default class Board {
         return this.#grid;
     }
 
+    get boardElement(){
+        return this.#boardElement;
+    }
+
     // Print out the board
     printBoard(){
         this.#grid.forEach((row) => {
