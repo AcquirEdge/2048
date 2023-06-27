@@ -1,12 +1,6 @@
 import Board from "./Board.mjs";
 import Tile from "./Tile.mjs";
 
-import readline from "readline";
-let rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-})
-
 // use constant because board size does not change during our program
 const BOARD_SIZE = 4;
 
@@ -39,49 +33,50 @@ function generateRandomTile() {
     
 }
 
-// Function to get the user's next move, and execute it
-function getMove(){
-    rl.question("Enter your next move(up, down, left, right): ", (answer) => {
-        switch(answer){
-            case 'left':
-                if(canMoveLeft()){
-                    moveLeft();
-                    generateRandomTile();
-                }
-                break;
-            case 'right':
-                if(canMoveRight()){
-                    moveRight();
-                    generateRandomTile();
-                }
-                break;
-            case 'up':
-                if(canMoveUp()){
-                    moveUp();
-                    generateRandomTile();
-                }
-                break;
-            case 'down':
-                if(canMoveDown()){
-                    moveDown();
-                    generateRandomTile();
-                }
-                break;
-        }
-        if(hasWon()){
-            board.printBoard();
-            console.log("You Won!");
-            rl.close();
-            return;
-        } else if(hasLost()){
-            board.printBoard();
-            console.log("You Lost!");
-            rl.close();
-            return;
-        }
+// Function to set up an event listener for button presses
+function setupInput(){
+    document.addEventListener("keydown", handleInput, {once: true});
+}
+
+// Event handler function for setupInput
+function handleInput(e){
+    switch(e.key){
+        case 'ArrowLeft':
+            if(canMoveLeft()){
+                moveLeft();
+                generateRandomTile();
+            }
+            break;
+        case 'ArrowRight':
+            if(canMoveRight()){
+                moveRight();
+                generateRandomTile();
+            }
+            break;
+        case 'ArrowUp':
+            if(canMoveUp()){
+                moveUp();
+                generateRandomTile();
+            }
+            break;
+        case 'ArrowDown':
+            if(canMoveDown()){
+                moveDown();
+                generateRandomTile();
+            }
+            break;
+    }
+    if(hasWon()){
         board.printBoard();
-        getMove();
-    })
+        console.log("You Won!");
+        return;
+    } else if(hasLost()){
+        board.printBoard();
+        console.log("You Lost!");
+        return;
+    }
+    board.printBoard();
+    setupInput();
 }
 
 // Function to move all the tiles to the left
@@ -209,7 +204,7 @@ function main(){
     generateRandomTile();
     generateRandomTile();
     board.printBoard();
-    getMove();
+    setupInput();
 }
 
 main();
