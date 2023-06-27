@@ -4,7 +4,7 @@ import Tile from "./Tile.mjs";
 // use constant because board size does not change during our program
 const BOARD_SIZE = 4;
 
-let board = new Board(BOARD_SIZE);
+let board = new Board(document.getElementById("board"), BOARD_SIZE);
 
 // Function to generate a random tile on our board
 function generateRandomTile() {

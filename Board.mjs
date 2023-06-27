@@ -4,13 +4,19 @@ export default class Board {
     // Define the game board as an empty array
     #grid = [];
     #boardSize;
+    #boardElement;
 
     // Initialize #grid to multidimensional array to represent board
-    constructor(size){
+    constructor(boardElement, size){
         this.#boardSize = size;
+        this.#boardElement = boardElement;
+        this.#boardElement.style.setProperty("--board-size", size)
         for(let i = 0; i < this.#boardSize; i++){
             let row = [];
             for(let j = 0; j < this.#boardSize; j++){
+                let cellElement = document.createElement("div");
+                cellElement.classList.add("cell");
+                this.#boardElement.appendChild(cellElement);
                 row.push(new Cell(j, i));
             }
             this.#grid.push(row);
